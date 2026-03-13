@@ -43,8 +43,8 @@ public class BookServiceImpl implements BookService {
                     existingBook.setName(book.getName());
                     existingBook.setCategory(book.getCategory());
                     existingBook.setAuthor(book.getAuthor());
-                    existingBook.setState(book.getState());
-                    existingBook.setAvailableCopies(book.getAvailableCopies());
+                    //existingBook.setState(book.getState());
+                    //existingBook.setAvailableCopies(book.getAvailableCopies());
                     return bookRepository.save(existingBook);
                 });
     }
@@ -56,20 +56,20 @@ public class BookServiceImpl implements BookService {
         return book;
     }
 
-    @Override
-    @Transactional
-    public Optional<Book> rent(Long id) {
-        return bookRepository
-                .findById(id)
-                .map(book -> {
-                    if (book.getState() == BookState.BAD){
-                        throw new BookNotAvailableException(id);
-                    }
-                    if (book.getAvailableCopies() == 0){
-                        throw new BookNotAvailableException(id);
-                    }
-                    book.setAvailableCopies(book.getAvailableCopies() - 1);
-                    return bookRepository.save(book);
-                });
-    }
+//    @Override
+//    @Transactional
+//    public Optional<Book> rent(Long id) {
+//        return bookRepository
+//                .findById(id)
+//                .map(book -> {
+//                    if (book.getState() == BookState.BAD){
+//                        throw new BookNotAvailableException(id);
+//                    }
+//                    if (book.getAvailableCopies() == 0){
+//                        throw new BookNotAvailableException(id);
+//                    }
+//                    book.setAvailableCopies(book.getAvailableCopies() - 1);
+//                    return bookRepository.save(book);
+//                });
+//    }
 }

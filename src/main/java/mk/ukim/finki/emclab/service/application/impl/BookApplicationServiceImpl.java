@@ -62,10 +62,10 @@ public class BookApplicationServiceImpl implements BookApplicationService {
                 .map(DisplayBookDto::from);
     }
 
-    @Override
-    public Optional<DisplayBookDto> rent(Long id) {
-        return bookService
-                .rent(id)
-                .map(DisplayBookDto::from);
-    }
+//    @Override
+//    public Optional<DisplayBookDto> rent(Long id) {
+//        return bookService
+//                .rent(id)
+//                .map(DisplayBookDto::from);
+//    }
 }

@@ -11,18 +11,18 @@ public record DisplayBookDto (
         Long id,
         String name,
         BookCategory category,
-        Long authorId,
-        BookState state,
-        Integer availableCopies
+        Long authorId
+//        BookState state,
+//        Integer availableCopies
 ) {
     public static DisplayBookDto from(Book book){
         return new DisplayBookDto(
                 book.getId(),
                 book.getName(),
                 book.getCategory(),
-                book.getAuthor().getId(),
-                book.getState(),
-                book.getAvailableCopies()
+                book.getAuthor().getId()
+//                book.getState(),
+//                book.getAvailableCopies()
         );
     }
 
