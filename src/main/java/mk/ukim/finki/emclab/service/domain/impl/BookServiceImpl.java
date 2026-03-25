@@ -1,10 +1,18 @@
 package mk.ukim.finki.emclab.service.domain.impl;
 
 import mk.ukim.finki.emclab.model.domain.Book;
+import mk.ukim.finki.emclab.model.dto.DisplayBookDto;
+import mk.ukim.finki.emclab.model.dto.DisplayBookListDto;
+import mk.ukim.finki.emclab.model.enumeration.BookCategory;
 import mk.ukim.finki.emclab.model.enumeration.BookState;
 import mk.ukim.finki.emclab.model.exception.BookNotAvailableException;
 import mk.ukim.finki.emclab.repository.BookRepository;
 import mk.ukim.finki.emclab.service.domain.BookService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,5 +79,28 @@ public class BookServiceImpl implements BookService {
                     book.setAvailableCopies(book.getAvailableCopies() - 1);
                     return bookRepository.save(book);
                 });
+    }
+
+
+
+    // lab2 - 1. za pagination
+    @Override
+    public Page<DisplayBookListDto> findAll(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return bookRepository.findAll(pageable).map(DisplayBookListDto::from);
+    }
+
+
+    @Override
+    public Page<DisplayBookListDto> listBooks(BookCategory category, BookState state, String authorName, Boolean available, int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+
+        int availableCopies = available != null && available ? 1 : 0;
+
+        Page<Book> books = bookRepository
+                .findByCategoryAndStateAndAuthorNameContainingAndAvailableCopiesGreaterThan(
+                        category, state, authorName != null ? authorName : "", availableCopies, pageable);
+
+        return books.map(DisplayBookListDto::from);
     }
 }

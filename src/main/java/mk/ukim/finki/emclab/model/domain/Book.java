@@ -12,6 +12,22 @@ import mk.ukim.finki.emclab.model.enumeration.BookState;
 @Setter
 @NoArgsConstructor
 @Table(name = "books")
+// lab2 - 3. za entity graph
+@NamedEntityGraph(
+        name = "book-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "author", subgraph = "author-subgraph"),
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "author-subgraph",
+                        attributeNodes = {
+                                @NamedAttributeNode("country")
+                        }
+                )
+        }
+)
+
 public class Book extends BaseAuditableEntity{
     @Column(nullable = false)
     private String name;

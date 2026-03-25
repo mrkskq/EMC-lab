@@ -2,10 +2,7 @@ package mk.ukim.finki.emclab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
-// lab2 - 6. za schedule event za materialized view
-@EnableScheduling
 @SpringBootApplication
 public class EmcLabApplication {
 
